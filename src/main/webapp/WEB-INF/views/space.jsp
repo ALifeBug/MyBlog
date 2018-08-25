@@ -19,10 +19,10 @@
     <article>
         <div style="width: 100%;height: 300px">
             <div class="portrait">
-                <c:if test="${!empty user.imageId}">
-                    <img src="${path}/image/getUserImage?userId=${user.id}" class="img-thumbnail" width="100%" height="100%">
+                <c:if test="${!empty user.portrait}">
+                    <img src="${path}/index/getImage?imgName=${user.portrait}" class="img-thumbnail" width="100%" height="100%">
                 </c:if>
-                <c:if test="${empty user.imageId}">
+                <c:if test="${empty user.portrait}">
                     <img src="${path}/img/img2.png" class="img-thumbnail" style="height: 210px;width: 210px">
                 </c:if>
             </div>

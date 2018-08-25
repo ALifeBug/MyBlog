@@ -8,6 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ include file="header.jsp"%>
+<link rel="stylesheet" href="${path}/css/fileinput.min.css">
+<script src="${path}/js/fileinput.min.js"></script>
+<script src="${path}/js/zh.js"></script>
 <html>
 <head>
     <title>${title}-修改</title>
@@ -18,17 +21,19 @@
     <%@include file="nav.jsp"%>
     <article>
         <center><h3>修改我的博客</h3></center>
-        <c:if test="${!empty imageId}">
+        <c:if test="${!empty image}">
             <div class="image">
-                <img src="${path}/image/getBlogImage?imageId=${imageId}"/>
+                <img src="${path}/index/getImage?imgName=${image}"/>
             </div>
         </c:if>
         <div class="area">
             <form method="post" action="${path}/blog/edit?pageNo=${page.pageNo}&id=${id}" role="form" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="image">替换配图</label>
-                    <input type="file" id="image" name="image" value="${path}/image/getBlogImage?imageId=${imageId}"/>
-                    <span style="color: #ac2925">${error}</span>
+                    <label class="col-sm-10 control-label item">替换配图</label>
+                    <div class="col-sm-10">
+                        <input type="file" name="myfile" data-ref="url2" class="col-sm-10 myfile" value=""/>
+                        <input type="hidden" name="url2" value="">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="title">标题</label>

@@ -26,31 +26,27 @@
                     浏览量(${article.browserCount})
                 </div>
                 </center>
-                <div style="width: 100%;height:auto">
-                    <c:if test="${!empty article.imageId}">
-                        <div class="image">
-                            <img src="${path}/image/getBlogImage?imageId=${article.imageId}" style="width:100%;height: auto"/>
-                        </div>
+                <div style="width: 700px;margin: 10px 35px;font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;font-size: 17px;">
+                    <c:if test="${!empty article.image}">
+                        <img src="${path}/index/getImage?imgName=${article.image}" class="image"/>
                     </c:if>
-                    <div class="content">${article.content}</div>
+                    ${article.content}
                 </div>
             </div>
-            <div class="commBanner">
-                <div><span style="font-size: large">评论</span><span style="font-size: medium">(已有${article.commentCount}条评论)</span></div>
-                <hr/>
-            </div>
+            <div style="clear: both"></div>
+            <div class="commBanner"><span style="font-size: 20px" class="glyphicon glyphicon-pencil">评论</span><span style="font-size: medium">(已有${article.commentCount}条评论)</span></div>
             <c:if test="${!empty sessionScope.user}">
             <div class="commArea">
             <form:form role="form" commandName="comment" action="${path}/comment/save?pageNo=${page.pageNo}" method="post" >
                 <div class="form-group">
-                    <textarea class="form-control textarea" rows="3" name="content" placeholder="留下你的评论吧..." required maxlength="100"></textarea>
+                    <input type="text" class="form-control" name="content" placeholder="发表评论" required maxlength="100">
                 </div>
                 <form:hidden path="blogId" value="${article.id}"/>
                 <form:hidden path="userName" value="${sessionScope.user.name}"/>
                 <form:hidden path="userId" value="${sessionScope.user.id}"/>
-                <form:hidden path="imageId" value="${sessionScope.user.imageId}"/>
+                <form:hidden path="image" value="${sessionScope.user.portrait}"/>
                 <div>
-                    <input type="submit" value="保&nbsp;&nbsp;&nbsp;&nbsp;存" class="btn btn-info button"/>
+                    <input type="submit" value="保存" class="btn btn-info"/>
                 </div>
             </form:form>
             </div>
@@ -61,22 +57,25 @@
                 </div>
             </c:if>
             <div class="commBanner">
-                <div><span style="font-size: medium">最新评论</span></div>
-                <hr/>
+                <span style="font-size: medium">最新评论</span>
             </div>
             <div class="comments">
                 <c:forEach var="comment" items="${comments}">
                     <div class="commInfo">
-                        <c:if test="${!empty comment.imageId}">
-                            <img src="${path}/image/getUserImage?userId=${comment.userId}" style="border-radius: 50%;" width="21px" height="21px">
-                        </c:if>
-                        <c:if test="${empty comment.imageId}">
-                            <img src="${path}/img/img2.png" style="border-radius: 50%;width: 21px;height: 21px">
-                        </c:if>
-                        <a href="${path}/user/space?id=${comment.userId}" style="text-decoration: none">${comment.userName}&nbsp;&nbsp;</a>
-                        <span><fmt:formatDate value="${comment.time}"  pattern="yyyy年MM月dd日 HH:mm"/></span>
+                        <div style="width: 50px">
+                            <c:if test="${!empty comment.image}">
+                                <img src="${path}/index/getImage?imgName=${comment.image}" style="border-radius: 50%;width: 45px;height: 45px;">
+                            </c:if>
+                            <c:if test="${empty comment.image}">
+                                <img src="${path}/img/img2.png" style="border-radius: 50%;width: 45px;height: 45px">
+                            </c:if>
+                        </div>
+                        <div style="width: 560px;height: auto;margin-bottom: 10px">
+                            <div class="commContent" style="font-size: 15px;color: #0f0f0f"><a href="${path}/user/space?id=${comment.userId}" style="text-decoration: none">${comment.userName}:</a>${comment.content}</div>
+                            <div class="commContent" style="font-size: 10px;color: #6c757d"><fmt:formatDate value="${comment.time}"  pattern="yyyy年MM月dd日 HH:mm"/></div>
+                        </div>
                     </div>
-                    <div class="commContent">${comment.content}</div>
+                    <div style="clear: both"></div>
                 </c:forEach>
             </div>
             <c:if test="${!empty sessionScope.user}">

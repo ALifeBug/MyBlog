@@ -1,9 +1,7 @@
 package com.ssh.service;
 
 import com.ssh.dao.ArticleDao;
-import com.ssh.dao.ImageDao;
 import com.ssh.dao.UserDao;
-import com.ssh.entity.Article;
 import com.ssh.entity.Image;
 import com.ssh.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,7 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private ArticleDao articleDao;
-    @Autowired
-    private ImageDao imageDao;
+
 
     //根据ID获取用户
     public User getUserById(Integer id){
@@ -53,8 +50,6 @@ public class UserService {
 
     //检查用户昵称是否被占用
     public boolean UserExist(User user){
-        System.out.println("****"+userDao.getUserByName(user.getName())+"****");
-        System.out.println(userDao.getUserByName(user.getName()).isEmpty());
         if(!userDao.getUserByName(user.getName()).isEmpty())
             return true;
         else
@@ -78,20 +73,10 @@ public class UserService {
 
 
     //更改用户信息
-    public void edit(User user, final MultipartFile file,String interest,String description){
+    public void edit(User user, String portrait,String interest,String description){
         //更新用户头像
-        if(!file.isEmpty()) {
-            if(user.getImageId()!=null) {
-                //先删除用户的原头像
-                Image image = imageDao.getById(user.getImageId());
-                imageDao.remove(image);
-            }
-
-            //保存新头像图片
-            Integer id = imageDao.save(file);
-
-            //设置用户头像ID
-            user.setImageId(id);
+        if(portrait!=null) {
+            user.setPortrait(portrait);
         }
 
         //保存用户的兴趣和个人描述

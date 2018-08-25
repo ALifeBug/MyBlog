@@ -32,7 +32,7 @@ public class Comment {
     private Integer userId;//评论者ID
 
     @Column(name = "IMAGE_ID")
-    private Integer imageId;//评论者头像ID
+    private String image;//评论者头像
 
     public Integer getId() {
         return id;
@@ -82,11 +82,11 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Integer getImageId() {
-        return imageId;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

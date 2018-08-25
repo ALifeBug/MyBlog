@@ -18,21 +18,22 @@
         <article>
                 <div style="width: 100%;height: 300px">
                     <div class="portrait">
-                        <c:if test="${!empty sessionScope.user.imageId}">
-                            <img src="${path}/image/getUserImage" class="img-thumbnail" width="100%" height="100%">
+                        <c:if test="${!empty sessionScope.user.portrait}">
+                            <img src="${path}/index/getImage?imgName=${sessionScope.user.portrait}" class="img-thumbnail" width="100%" height="100%">
                         </c:if>
-                        <c:if test="${empty sessionScope.user.imageId}">
-                            <img src="${path}/img/img2.png" class="img-thumbnail" style="height: 210px;width: 210px">
+                        <c:if test="${empty sessionScope.user.portrait}">
+                            <img src="${path}/img/img2.png" class="img-thumbnail" style="height: 240px;width: 240px">
                         </c:if>
                     </div>
                     <div class="userInfo">
                         <div class="top">
                             <span>${user.name}</span>
-                            <a href="${path}/user/editForm" class="btn btn-default" role="button">修改个人信息</a>
+                            <a href="${path}/index/logout" >登 出</a>
+                            <a href="${path}/user/editForm" >修改个人信息</a>
                         </div>
-                        <hr style="width: 450px;margin: 0"/>
+                        <hr style="margin: 0;width: 540px;"/>
                         <div class="bottom">
-                            <table  cellspacing="4" cellpadding="10">
+                            <table  cellspacing="2" cellpadding="2">
                                 <tr>
                                     <td align="right">已有博客:&nbsp;</td>
                                     <td>${user.articles.size()}篇</td>

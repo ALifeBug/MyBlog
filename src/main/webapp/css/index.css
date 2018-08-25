@@ -3,23 +3,41 @@
 .personalInfo{height: auto;width: 260px;padding: 20px;margin:0 auto;}
 .personalInfo div{
     font-family: "微软雅黑";
-    font-size: 10px;
+    font-size: 12px;
     margin: 5px 0 5px 60px;
 }
 .bgImg{
     margin: 10px auto;
-    width: 728px;
+    width: 95%;
     height: 300px;
     background: url("../img/img1.jpg") no-repeat center;
+    padding-top: 100px;
+    padding-left: 100px;
+    color: #080808;
 }
-
+.bgImg h6:hover{
+    font-size: 25px;
+    transition: .3s ease;
+    cursor: pointer;
+    margin: 0 auto;
+}
+.article{
+    padding-left: 20px;
+}
 .article h2{
-    border-bottom: #080808 solid 2px;margin: 10px 0 20px;height: 26px;line-height: 27px;font-size: 16px;font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;letter-spacing: 2px
+    border-bottom: #474645 solid 2px;
+    margin: 10px 0 20px;
+    height: 26px;
+    line-height: 27px;
+    font-size: 16px;
+    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+    letter-spacing: 2px;
+    width: 97%;
 }
 .article h2 p { background: #474645; width: 180px; color: #fff; text-align: center; box-shadow: #999 3px -5px 1px; }
 .article h2 p span { color: #38b3d4; }
 .articleList{
-    margin-bottom: 35px;
+    margin:30px 20px 10px;
 }
 .articleList h4{
     margin-bottom: 10px;
@@ -66,3 +84,4 @@
     padding: 2px;
     border:1px solid red;
 }
+hr{width: 95%}

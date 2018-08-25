@@ -7,6 +7,7 @@ import com.ssh.entity.User;
 import com.ssh.service.ArticleService;
 import com.ssh.service.CommentService;
 import com.ssh.service.UserService;
+import com.ssh.util.CookieUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +96,7 @@ public class IndexController {
     }
 
     @RequestMapping("/register")
-    public String register(@Valid User user, BindingResult result, HttpServletRequest request, Model model){
+    public String register(@Valid User user, BindingResult result, HttpServletRequest request, HttpServletResponse response,Model model) throws UnsupportedEncodingException {
         //检查确认密码是否正确
         boolean confirm = request.getParameter("confirmPwd").equals(user.getPassword());
 
@@ -112,6 +115,7 @@ public class IndexController {
             //保存用户，返回主页
             userService.saveUser(user);
             request.getSession().setAttribute("user",user);
+            CookieUtils.cookie(30*24*60*60,response,user.getName(),user.getPassword());
             return "redirect:/index/";
         }
     }
@@ -123,7 +127,7 @@ public class IndexController {
     }
 
     @RequestMapping("/login")
-    public String Login(HttpServletRequest request, Model model){
+    public String Login(HttpServletRequest request, HttpServletResponse response,Model model) throws UnsupportedEncodingException {
         //获取参数昵称和密码
         String name = request.getParameter("name");
         String password = request.getParameter("password");
@@ -135,15 +139,17 @@ public class IndexController {
             model.addAttribute("error","密码错误");
         }else{
             request.getSession().setAttribute("user",userService.getUserByName(name));
+            CookieUtils.cookie(30*24*60*60,response,name,password);
         }
         return "index";
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpSession session){
-        //移除session中的user
+    public String logout(HttpSession session,HttpServletResponse response) throws UnsupportedEncodingException {
+        User user = (User) session.getAttribute("user");
+        CookieUtils.cookie(0, response, user.getName(), user.getPassword());
         session.removeAttribute("user");
-        return "index";
+        return "redirect:/";
     }
 
     /**
@@ -164,5 +170,30 @@ public class IndexController {
             model.addAttribute("users",users);
         }
         return "index";
+    }
+
+    //读写图片
+    @RequestMapping("/getImage")
+    public void getImage(@RequestParam String imgName,HttpServletResponse response){
+        String picUrl = "/home/hqs/image/";
+        FileInputStream in;
+        response.setContentType("application/octet-stream;charset=UTF-8");
+
+        try {
+            in = new FileInputStream(picUrl+imgName);
+            int i = in.available();
+            byte[] data = new byte[i];
+            in.read(data);
+            in.close();
+
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            outputStream.write(data);
+            outputStream.flush();
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,16 +3,9 @@ package com.ssh.controller;
 import com.ssh.entity.*;
 import com.ssh.service.ArticleService;
 import com.ssh.service.CommentService;
-import com.ssh.service.ImageService;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,11 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.io.*;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +41,7 @@ public class ArticleController implements HandlerExceptionResolver{
     public Page<Article> getPage(@RequestParam int pageNo,HttpSession session){
         User user = (User)session.getAttribute("user");
         String name = user.getName();
-        Page<Article> page =articleService.queryForPage(pageNo,4,name);
+        Page<Article> page =articleService.queryForPage(pageNo,2,name);
         return page;
     }
 
@@ -65,17 +54,19 @@ public class ArticleController implements HandlerExceptionResolver{
     //保存博客
     @RequestMapping("/save")
     public String saveArticle(@RequestParam("title") String title,@RequestParam("content")String content, HttpSession session,
-                              @RequestParam("img")MultipartFile img,@RequestParam("pageNo")Integer pageNo){
+                              @RequestParam("pageNo")Integer pageNo){
         //设置博客标题和内容
         Article article = new Article();
         article.setContent(content);
         article.setTitle(title);
-
+        String image = (String)session.getAttribute("image");
+        if(image!=null)
+            article.setImage(image);
         //获取博客作者
         User user = (User)session.getAttribute("user");
 
         //为用户添加博客
-        articleService.saveArticle(article,img,user);
+        articleService.saveArticle(article,user);
 
         return "redirect:/blog/myBlog?pageNo="+pageNo;
     }
@@ -86,7 +77,7 @@ public class ArticleController implements HandlerExceptionResolver{
         Article article = articleService.queryById(blogId);
 
         model.addAttribute("id",blogId);
-        model.addAttribute("imageId",article.getImageId());
+        model.addAttribute("image",article.getImage());
         model.addAttribute("title",article.getTitle());
         model.addAttribute("content",article.getContent());
 
@@ -95,9 +86,10 @@ public class ArticleController implements HandlerExceptionResolver{
 
     //编辑博客
     @RequestMapping("/edit")
-    public String edit(@RequestParam("image")MultipartFile image,@RequestParam("title")String title,
+    public String edit(@RequestParam("title")String title,HttpSession session,
                        @RequestParam("content")String content,@RequestParam("id")Integer id,@RequestParam("pageNo")Integer pageNo){
         Article article = articleService.queryById(id);
+        String image = (String)session.getAttribute("image");
         articleService.edit(article,image,title,content);
         return "redirect:/blog/details?blogId="+id+"&pageNo="+pageNo;
     }

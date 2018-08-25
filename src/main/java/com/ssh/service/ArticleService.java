@@ -2,7 +2,6 @@ package com.ssh.service;
 
 import com.ssh.dao.ArticleDao;
 import com.ssh.dao.FollowDao;
-import com.ssh.dao.ImageDao;
 import com.ssh.dao.UserDao;
 import com.ssh.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class ArticleService {
     private ArticleDao articleDao;
 
     @Autowired
-    private ImageDao imageDao;
-
-    @Autowired
     private UserDao userDao;
 
     @Autowired
@@ -41,7 +37,7 @@ public class ArticleService {
         return articleDao.getById(id);
     }
 
-    public void saveArticle(Article article, final MultipartFile img, User user){
+    public void saveArticle(Article article, User user){
         //设置默认属性
         article.setTime(new Date());
         article.setEditor(user.getName());
@@ -51,10 +47,6 @@ public class ArticleService {
         //替换空格与换行,再次显示保留原格式
         String content = article.getContent();
         article.setContent(content.replaceAll("\n","<br>").replaceAll(" ","&nbsp;"));
-        if(!img.isEmpty()) {
-            Integer id = imageDao.save(img);
-            article.setImageId(id);
-        }
         //保存用户的文章
         articleDao.save(article);
         user.getArticles().add(article);
@@ -120,15 +112,10 @@ public class ArticleService {
     }
 
     //修改博客
-    public void edit(Article article, final MultipartFile file,String title,String content){
+    public void edit(Article article, String image,String title,String content){
 
-        if(!file.isEmpty()) {
-            //先删除博客的原配图
-            Image image = imageDao.getById(article.getImageId());
-            imageDao.remove(image);
-            //保存新配图
-            Integer id = imageDao.save(file);
-            article.setImageId(id);
+        if(image!=null) {
+            article.setImage(image);
         }
         article.setTitle(title);
         article.setContent(content);
@@ -141,11 +128,6 @@ public class ArticleService {
     public void delete(Integer id){
         Article article = articleDao.getById(id);
         if(article!=null){
-            //获取博客图片，先删除配图
-            Integer imageId = article.getImageId();
-            if(imageId!=null) {
-                imageDao.remove(imageDao.getById(imageId));
-            }
             //删除博客
             articleDao.remove(article);
 

@@ -41,8 +41,7 @@ public class Article {
     private Integer editorId;
 
     @Column(name = "IMAGE")
-    private Integer imageId;
-
+    private String image;
 
     public Article(){}
 
@@ -102,14 +101,6 @@ public class Article {
         this.editor = editor;
     }
 
-    public Integer getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
-    }
-
     public Integer getEditorId() {
         return editorId;
     }
@@ -118,20 +109,14 @@ public class Article {
         this.editorId = editorId;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", time=" + time +
-                ", browserCount=" + browserCount +
-                ", commentCount=" + commentCount +
-                ", editor='" + editor + '\'' +
-                ", editorId=" + editorId +
-                ", imageId=" + imageId +
-                '}';
+    public String getImage() {
+        return image;
     }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 
     public Article(Integer id,String title, Date time, Integer browserCount, Integer commentCount, String editor) {
         this.id = id;

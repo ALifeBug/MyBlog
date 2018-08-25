@@ -39,8 +39,8 @@ public class User {
     @Column(name = "DESCRIPTION")
     private String description;//描述
 
-    @Column(name = "IMAGE")
-    private Integer imageId;//头像,图片id
+    @Column(name = "PORTRAIT")
+    private String portrait;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
@@ -104,25 +104,11 @@ public class User {
         this.description = description;
     }
 
-    public Integer getImageId() {
-        return imageId;
+    public String getPortrait() {
+        return portrait;
     }
 
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", interest='" + interest + '\'' +
-                ", description='" + description + '\'' +
-                ", imageId=" + imageId +
-                ", articles=" + articles +
-                '}';
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 }

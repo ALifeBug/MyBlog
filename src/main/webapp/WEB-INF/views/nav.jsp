@@ -7,12 +7,11 @@
 --%>
 <%@ page pageEncoding="UTF-8" isELIgnored="false" %>
 <header>
-    <h1>MyBlog</h1>
-    <h4>Thank you for attention!</h4>
+    <div style="width: 1200px;height: 15px;background-color: #080808"></div>
     <nav id="tonal">
-        <a href="${path}/index/home" id="index">首页</a>
-        <a href="${path}/blog/myBlog?pageNo=1" id="blog">博客</a>
-        <a href="${path}/user/mySpace" id="user">空间</a>
-        <a href="${path}/about/about" id="about">关于</a>
+        <a href="${path}/index/home" id="index"><span class="glyphicon glyphicon-home"></span>首页</a>
+        <a href="${path}/blog/myBlog?pageNo=1" id="blog"><span class="glyphicon glyphicon-pencil"></span>博客</a>
+        <a href="${path}/user/mySpace" id="user"><span class="glyphicon glyphicon-user"></span>空间</a>
+        <a href="${path}/about/about" id="about">关于我</a>
     </nav>
 </header>

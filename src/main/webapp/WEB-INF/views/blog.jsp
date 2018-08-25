@@ -7,48 +7,39 @@
 --%>
 <%@page pageEncoding="UTF-8" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@include file="header.jsp"%>
 <html>
 <head>
     <title>我的博客</title>
+    <%@include file="header.jsp"%>
+    <link rel="stylesheet" href="${path}/css/fileinput.min.css">
+    <script src="${path}/js/fileinput.min.js"></script>
+    <script src="${path}/js/zh.js"></script>
     <link href="${path}/css/blog.css" rel="stylesheet">
     <jsp:useBean id="article" class="com.ssh.entity.Article" scope="request"/>
 </head>
 <body>
     <div class="iBody">
         <%@include file="nav.jsp"%>
-        <article>
-            <div class="blog">
-                <h2>
-                    <p>
-                        <span>写博客</span>
-                    </p>
-                </h2>
-            </div>
-            <div class="writeArea">
-            <form role="form" action="${path}/blog/save?pageNo=${page.pageNo}" method="post" enctype="multipart/form-data">
+        <article style="margin-top: 20px">
+            <form action="${path}/blog/save?pageNo=${page.pageNo}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" class="form-control title" placeholder="给个标题吧" name="title" id="title" required value="${title}"/>
+                    <input type="text" class="form-control title" placeholder="标题" name="title" id="title" required />
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control content" rows="10" placeholder="写点什么吧...(最多500个字)" name="content" id="content" required maxlength="500">${content}</textarea>
+                    <textarea class="form-control content" rows="30" placeholder="开始创作" name="content" id="content" required maxlength="500"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="img">贴个图(1M以内)</label>
-                    <input type="file" id="img" name="img"/>
-                    <span style="color: #ac2925">${error}</span>
+                    <div class="col-sm-10" style="margin-left: -16px">
+                        <input type="file" name="myfile" data-ref="url2" class="col-sm-10 myfile" value=""/>
+                        <input type="hidden" name="url2" value="">
+                    </div>
                 </div>
                 <div>
-                    <input type="submit" value="保&nbsp;&nbsp;&nbsp;&nbsp;存" class="btn btn-info btn-lg btn-block"/>
+                    <input type="submit" value="保存" class="btn btn-success" style="margin-left: 65px"/>
                 </div>
             </form>
-            </div>
             <div class="blog">
-                <h2>
-                    <p>
-                        <span>我的博客</span>
-                    </p>
-                </h2>
+                <h5 style="margin-left: 40px;margin-top: 40px;padding-bottom: 5px;width: 800px;border-bottom: 1px solid">历史博客</h5>
                 <c:if test="${empty sessionScope.user.articles}">
                     <div>
                         <div style="margin: 20px 0 10px 50px;font-size: 20px;text-align: center;font-family: 华文彩云">
@@ -71,42 +62,98 @@
                             </span>
                         </div>
                     </div>
-                    <hr class="hr" />
+                    <hr/>
                 </c:forEach>
             </div>
-            <div>
-                    <c:if test="${page.totalPages != 0}">
-                        <center>
-                    <ul class="pagination pagination-sm">
-                        <!--当前页数为1-->
-                        <c:if test="${page.pageNo==1}">
-                            <li class="disabled page-item"><a class="page-link" style="margin: 0 10px;border-radius: 50px;font-family: Consolas" href="#">&lt;</a></li>
-                        </c:if>
-                        <!--当前页数不为1-->
-                        <c:if test="${page.pageNo > 1}">
-                            <li class="page-item"><a class="page-link" href="${path}/blog/myBlog?pageNo=${page.previousPageNo}" style="margin: 0 10px;border-radius: 50px;font-family: Consolas">&lt;</a></li>
-                        </c:if>
-                        <c:forEach begin="1" end="${page.totalPages}" var="x">
-                            <c:if test="${page.pageNo==x}">
-                                <li class="page-item active"><a class="page-link" href="${path}/blog/myBlog?pageNo=${x}" style="margin: 0 10px;border-radius: 50px;font-family: Consolas">${x}</a></li>
-                            </c:if>
-                            <c:if test="${page.pageNo!=x}">
-                                <li class="page-item" ><a class="page-link" href="${path}/blog/myBlog?pageNo=${x}" style="margin: 0 10px;border-radius: 50px">${x}</a></li>
-                            </c:if>
-                        </c:forEach>
-                        <c:if test="${page.totalPages==page.pageNo}">
-                            <li class="page-item disabled"><a class="page-link" href="#" style="margin: 0 10px;border-radius: 50px">&gt;</a></li>
-                        </c:if>
-                        <c:if test="${page.totalPages>page.pageNo}">
-                            <li class="page-item"><a class="page-link" href="${path}/blog/myBlog?pageNo=${page.nextPageNo}" style="margin: 0 10px;border-radius: 50px">&gt;</a></li>
-                        </c:if>
-                    </ul>
-                        </center>
+            <div style="margin: 50px 35px">
+                <c:if test="${page.totalPages != 0}">
+                <ul class="pagination pagination-sm">
+                    <!--当前页数为1-->
+                    <c:if test="${page.pageNo==1}">
+                        <li class="disabled page-item"><a class="page-link"  href="#">«</a></li>
                     </c:if>
+                    <!--当前页数不为1-->
+                    <c:if test="${page.pageNo > 1}">
+                        <li class="page-item"><a class="page-link" href="${path}/blog/myBlog?pageNo=${page.previousPageNo}" >«</a></li>
+                    </c:if>
+                    <c:forEach begin="1" end="${page.totalPages}" var="x">
+                        <c:if test="${page.pageNo==x}">
+                            <li class="page-item active"><a class="page-link" href="${path}/blog/myBlog?pageNo=${x}" >${x}</a></li>
+                        </c:if>
+                        <c:if test="${page.pageNo!=x}">
+                            <li class="page-item" ><a class="page-link" href="${path}/blog/myBlog?pageNo=${x}" >${x}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${page.totalPages==page.pageNo}">
+                        <li class="page-item disabled"><a class="page-link" href="#" >»</a></li>
+                    </c:if>
+                    <c:if test="${page.totalPages>page.pageNo}">
+                        <li class="page-item"><a class="page-link" href="${path}/blog/myBlog?pageNo=${page.nextPageNo}">»</a></li>
+                    </c:if>
+                </ul>
+                </c:if>
             </div>
+
         </article>
         <%@include file="aside.jsp"%>
         <div style="clear:both"></div>
     </div>
+    <script>
+        $(".myfile").fileinput({
+            //上传的地址
+            uploadUrl:"${path}/user/uploadFile",
+            uploadAsync : true, //默认异步上传
+            showUpload : false, //是否显示上传按钮,跟随文本框的那个
+            showRemove : false, //显示移除按钮,跟随文本框的那个
+            showCaption : true,//是否显示标题,就是那个文本框
+            showPreview : true, //是否显示预览,不写默认为true
+            dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+            //minImageWidth: 50, //图片的最小宽度
+            //minImageHeight: 50,//图片的最小高度
+            //maxImageWidth: 1000,//图片的最大宽度
+            //maxImageHeight: 1000,//图片的最大高度
+            maxFileSize:3072,//单位为kb，如果为0表示不限制文件大小
+            //minFileCount: 0,
+            maxFileCount : 4, //表示允许同时上传的最大文件个
+            enctype : 'multipart/form-data',
+            validateInitialCount : true,
+            previewFileIcon : "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany : "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            allowedFileTypes : [ 'image' ],//配置允许文件上传的类型
+            allowedPreviewTypes : [ 'image' ],//配置所有的被预览文件类型
+            allowedPreviewMimeTypes : [ 'jpg', 'png', 'gif' ],//控制被预览的所有mime类型
+            language : 'zh'
+        });
+        //异步上传返回结果处理
+        $('.myfile').on('fileerror', function(event, data, msg) {
+            console.log("fileerror");
+            console.log(data);
+        });
+        //异步上传返回结果处理
+        $(".myfile").on("fileuploaded", function(event, data, previewId, index) {
+            console.log("fileuploaded");
+            var ref = $(this).attr("data-ref");
+            $("input[name='" + ref + "']").val(data.response.url);
+
+        });
+
+        //同步上传错误处理
+        $('.myfile').on('filebatchuploaderror', function(event, data, msg) {
+            console.log("filebatchuploaderror");
+            console.log(data);
+        });
+
+        //同步上传返回结果处理
+        $(".myfile").on("filebatchuploadsuccess",
+            function(event, data, previewId, index) {
+                console.log("filebatchuploadsuccess");
+                console.log(data);
+            });
+
+        //上传前
+        $('.myfile').on('filepreupload', function(event, data, previewId, index) {
+            console.log("filepreupload");
+        });
+    </script>
 </body>
 </html>
