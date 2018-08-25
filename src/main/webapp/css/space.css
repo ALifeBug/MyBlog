@@ -1,0 +1,59 @@
+.portrait{
+    margin-top: 25px;
+    margin-left: 25px;
+    float: left;
+    width: 210px;
+    height: 210px;
+}
+.userInfo{
+    margin: 20px 20px 40px 0;
+    font-family: "微软雅黑";
+    float: right;
+}
+.top{
+    height: 50px;
+    width: 450px;
+}
+.anyTop{height: 50px;width: 450px;}
+.top span{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+}
+.anyTop span{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: bold;font-size: 35px;}
+.followButton{float: right;margin-top: 7px}
+.top a{
+     text-decoration: none;
+     color: #080808;
+     border:1px #080808 solid;
+     border-radius: 7px;
+     line-height: 25px;
+     padding: 1px;
+     display: inline-block;
+     margin-top: 16px;
+    float: right;
+    width: 120px;
+    height: 28px;
+ }
+.anyArticle{margin:5px 30px 5px}
+.anyArticle a{font-size: 23px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color: rgba(20,142,204,0.82);font-weight: bold;text-decoration: none}
+.anyArticle span{float: right;position: relative;top: 10px}
+.bottom{
+    margin-top: 15px;
+    font-size: 15px;
+    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+}
+.Info{
+    clear: both;
+    margin-bottom: 30px;
+}
+.Info h2{
+    border-bottom: #080808 solid 2px;margin: 10px 20px 0 20px;height: 26px;line-height: 27px;font-size: 16px;font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;letter-spacing: 2px
+}
+.Info h2 p { background: #474645; width: 180px; color: #fff; text-align: center; box-shadow: #999 3px -5px 1px; }
+.Info h2 p span { color: #38b3d4; }
+.hint{margin: 20px 0 10px 50px;font-size: 20px;text-align: center;font-family: 华文彩云}
+.follow{margin: 20px 0 10px 50px}
+.follow img{border-radius: 50%; width:30px;height:30px}
+.follow a{font-family: Consolas;font-size: 23px;color: rgba(30,105,204,0.82);text-decoration: none;position: relative;top: 5px;}
+.follow span{font-size: 15px;font-family: '微软雅黑 Light';position: relative;top: 5px;}

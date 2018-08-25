@@ -1,0 +1,38 @@
+.form input {
+    outline: none;
+    font-size: 14px;
+    color: black;
+    /*border: 1px solid #adadad;*/
+    margin: 5px;
+    padding: 6px 12px;
+    width: 200px;
+    height: 40px;
+    background-color: white;
+    clear: both;
+    font-family: 微软雅黑;
+}
+.form textarea{
+    margin: 5px;
+    width: 200px;
+    height:60px;
+    font-family: "微软雅黑";
+}
+aside p{
+    text-align: center;
+}
+.error{
+    color: #ac2925;
+    font-size: 5px;
+    font-family: "微软雅黑";
+    padding-left: 10px;
+}
+.formBlock{
+    margin: 5px;
+    padding: 10px 10px 10px 20px;
+    height: 460px;
+    width: 260px;
+}
+.searchText{height: 35px;width:200px;border-bottom-left-radius: 5px;border-top-left-radius: 5px;border: 2px solid #2aabd2;padding: 2px 0 2px 5px;font-family: 微软雅黑;color: black}
+.searchButton{height: 35px;border: 2px solid #2aabd2;color: #222222;font-family:微软雅黑;background-color: #2aabd2;border-top-right-radius: 5px;border-bottom-right-radius: 5px}
+.usrPortrait{border-radius: 50%; width:20px; height:20px}
+.usrText{font-size: 15px;font-family: 微软雅黑;color: #2aabd2}

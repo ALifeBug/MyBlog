@@ -1,0 +1,68 @@
+.avator h4{text-align: left}
+.avator p{float: left;padding-left: 10px}
+.personalInfo{height: auto;width: 260px;padding: 20px;margin:0 auto;}
+.personalInfo div{
+    font-family: "微软雅黑";
+    font-size: 10px;
+    margin: 5px 0 5px 60px;
+}
+.bgImg{
+    margin: 10px auto;
+    width: 728px;
+    height: 300px;
+    background: url("../img/img1.jpg") no-repeat center;
+}
+
+.article h2{
+    border-bottom: #080808 solid 2px;margin: 10px 0 20px;height: 26px;line-height: 27px;font-size: 16px;font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;letter-spacing: 2px
+}
+.article h2 p { background: #474645; width: 180px; color: #fff; text-align: center; box-shadow: #999 3px -5px 1px; }
+.article h2 p span { color: #38b3d4; }
+.articleList{
+    margin-bottom: 35px;
+}
+.articleList h4{
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "微软雅黑 Light";
+
+}
+.articleList h4 a{
+    color: #0f0f0f;
+}
+.articleList h4 a:hover{
+    color: rgba(204,24,18,0.82);
+    text-decoration: none;
+}
+.articleInfo{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-left: 0;
+}
+.order{
+    margin-left: 20px;
+    font-size: 15px;
+    font-family: Arial;
+}
+.order a{
+    text-decoration: none;
+    color: #080808;
+    display: inline-block;
+    border:1px #ac2925 solid;
+    border-radius: 5px;
+    line-height: 20px;
+    padding: 2px;
+}
+.order a:hover{
+    color: #ac2925;
+}
+#order_current{
+    text-decoration: none;
+    color: #FFFFFF;
+    display: inline-block;
+    background-color: #ac2925;
+    border-radius: 5px;
+    line-height: 20px;
+    padding: 2px;
+    border:1px solid red;
+}
