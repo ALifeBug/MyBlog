@@ -27,27 +27,27 @@
                     </div>
                     <div class="userInfo">
                         <div class="top">
-                            <span>${user.name}</span>
-                            <a href="${path}/index/logout" >登 出</a>
-                            <a href="${path}/user/editForm" >修改个人信息</a>
+                            <span>${user.name}</span> 关注${fn:length(follower)} | 粉丝${fn:length(followed)}
+                            <a href="${path}/index/logout" ><button class="btn btn-sm btn-danger">登出</button></a>
+                            <a href="${path}/user/editForm" ><button class="btn btn-sm btn-primary">修改</button></a>
                         </div>
                         <hr style="margin: 0;width: 540px;"/>
                         <div class="bottom">
                             <table  cellspacing="2" cellpadding="2">
                                 <tr>
-                                    <td align="right">已有博客:&nbsp;</td>
+                                    <td align="right" style="font-weight: bold"><span class="glyphicon glyphicon-book"></span>已有博客:&nbsp;</td>
                                     <td>${user.articles.size()}篇</td>
                                 </tr>
                                 <tr>
-                                    <td align="right">我的邮箱:&nbsp;</td>
+                                    <td align="right" style="font-weight: bold"><span class="glyphicon glyphicon-envelope"></span>我的邮箱:&nbsp;</td>
                                     <td>${user.email}</td>
                                 </tr>
                                 <tr>
-                                    <td align="right">我的兴趣:&nbsp;</td>
+                                    <td align="right" style="font-weight: bold"><span class="glyphicon glyphicon-heart"></span>我的兴趣:&nbsp;</td>
                                     <td>${user.interest}</td>
                                 </tr>
                                 <tr>
-                                    <td align="right">个人描述:&nbsp;</td>
+                                    <td align="right" style="font-weight: bold"><span class="glyphicon glyphicon-tag"></span>个人描述:&nbsp;</td>
                                     <td>${user.description}</td>
                                 </tr>
                             </table>
@@ -63,8 +63,9 @@
                     <c:if test="${!empty follower}">
                         <c:forEach items="${follower}" var="follow">
                             <div class="follow">
+                                <img src="${path}/index/getImage?usrId=${follow.followedId}" style="border-radius: 50%;width: 35px;height: 35px">
                                 <a href="${path}/user/space?id=${follow.followedId}">${follow.followed}</a>
-                                <span>(更新博客${follow.update}篇)</span>
+                                <span class="badge badge-primary" style="font-size: 12px">${follow.update}</span>
                             </div>
                         </c:forEach>
                     </c:if>
@@ -83,6 +84,7 @@
                 <c:if test="${!empty followed}">
                     <c:forEach items="${followed}" var="follow">
                         <div class="follow">
+                            <img src="${path}/index/getImage?usrId=${follow.followerId}" style="border-radius: 50%;width: 35px;height: 35px">
                             <a href="${path}/user/space?id=${follow.followerId}" style="color: rgba(61,204,17,0.82);">${follow.follower}</a>
                         </div>
                     </c:forEach>

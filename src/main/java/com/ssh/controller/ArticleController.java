@@ -79,7 +79,7 @@ public class ArticleController implements HandlerExceptionResolver{
         model.addAttribute("id",blogId);
         model.addAttribute("image",article.getImage());
         model.addAttribute("title",article.getTitle());
-        model.addAttribute("content",article.getContent());
+        model.addAttribute("content",article.getContent().replaceAll("<br>","\n").replaceAll("&nbsp;"," "));
 
         return "editblog";
     }

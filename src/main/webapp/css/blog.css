@@ -22,14 +22,14 @@
     color: rgba(204,24,18,0.82);
     text-decoration: none;
 }
-.blogContent{
+/*.blogContent{
     width: 500px;
     overflow: hidden;
     font-size: 15px;
     height: 100px;
     word-break:normal;
     white-space: normal;
-}
+}*/
 .blogInfo{
     float: right;
 }

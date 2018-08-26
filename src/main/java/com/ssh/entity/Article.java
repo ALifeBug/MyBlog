@@ -22,7 +22,7 @@ public class Article {
     @Column(name = "TITLE",nullable = false)
     private String title;//标题
 
-    @Column(name = "CONTENT",length = 500)
+    @Column(name = "CONTENT",length = 10000)
     private String content;//内容
 
     @Column(name = "TIME")

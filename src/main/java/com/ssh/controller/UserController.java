@@ -53,19 +53,20 @@ public class UserController {
     }
 
     @RequestMapping("/space")
-    public String space(@RequestParam("id")Integer id, Model model, HttpSession session) throws UnsupportedEncodingException {
+    public String space(@RequestParam("id")Integer id, Model model, HttpSession session){
         User user;
         user = userService.getUserById(id);
         model.addAttribute("user",user);
         //查询登陆的用户是否关注了该空间的用户
-        Follow follow = followService.queryForOne(user.getName(),getSessionUser(session).getName());
-        boolean isFollowed = false;
-        if(follow!=null){
-            followService.toZero(user.getName(),getSessionUser(session).getName());
-            isFollowed = true;
+        if(getSessionUser(session)!=null) {
+            Follow follow = followService.queryForOne(user.getName(), getSessionUser(session).getName());
+            boolean isFollowed = false;
+            if (follow != null) {
+                followService.toZero(user.getName(), getSessionUser(session).getName());
+                isFollowed = true;
+            }
+            model.addAttribute("isFollowed", isFollowed);
         }
-        model.addAttribute("isFollowed",isFollowed);
-
         return "space";
     }
 

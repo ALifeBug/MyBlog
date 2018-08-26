@@ -3,10 +3,11 @@ body{background: #f5f5f5;font-family: "Microsoft Yahei", Arial, Helvetica, sans-
 .iBody{
     width: 1200px; margin: 0 auto ; box-shadow: 0 0 10px 5px #666;padding: 0;
 }
+a{text-decoration: none}
 nav { background: #080808; height: 48px; line-height: 48px; padding-left: 10px;
 }/* 兼容IE6 透明 */
 nav a { display: inline-block; font-size: 18px; font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif; color: #FFF; padding: 0 50px ;text-decoration: none; }
 nav a:hover {  text-decoration: none;color: #e41635;border-bottom: 2px solid #e41635;transition: .5s ease}
-article { width: 73%; float: left; height: 1500px;margin: 0}/* 左侧栏 */
-aside { width: 27%; float: right;color: white;height: 1500px;background-color: #080808}/* 右侧栏 */
+article { width: 73%; float: left; height: 1600px;margin: 0;overflow: auto}/* 左侧栏 */
+aside { width: 27%; float: right;color: white;height: 1630px;background-color: #080808}/* 右侧栏 */
 #tonal_current { color: #e41635;border-bottom: 2px solid #e41635;}/* 高亮选中颜色 */

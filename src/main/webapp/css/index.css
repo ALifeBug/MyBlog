@@ -1,10 +1,9 @@
 .avator h4{text-align: left}
 .avator p{float: left;padding-left: 10px}
-.personalInfo{height: auto;width: 260px;padding: 20px;margin:0 auto;}
+.personalInfo{height: auto;width: 300px;padding: 20px;margin:0 auto;}
 .personalInfo div{
-    font-family: "微软雅黑";
-    font-size: 12px;
-    margin: 5px 0 5px 60px;
+    font-size: 13px;
+    margin: 5px 0 5px 50px;
 }
 .bgImg{
     margin: 10px auto;

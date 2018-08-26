@@ -21,7 +21,7 @@
     font-size: 35px;
 }
 .anyTop span{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: bold;font-size: 35px;}
-.followButton{float: right;margin-top: 7px}
+.followButton{float: right;margin-top: 15px}
 .top a{
      text-decoration: none;
      color: #080808;
@@ -49,5 +49,5 @@
 .hint{margin: 20px 0 10px 50px;font-size: 20px;text-align: center;font-family: 华文彩云}
 .follow{margin: 20px 0 10px 50px}
 .follow img{border-radius: 50%; width:30px;height:30px}
-.follow a{font-family: Consolas;font-size: 23px;color: rgba(30,105,204,0.82);text-decoration: none;position: relative;top: 5px;}
+.follow a{font-family: Consolas;font-size: 18px;color: rgba(30,105,204,0.82);text-decoration: none;position: relative;top: 5px;}
 .follow span{font-size: 15px;font-family: '微软雅黑 Light';position: relative;top: 5px;}

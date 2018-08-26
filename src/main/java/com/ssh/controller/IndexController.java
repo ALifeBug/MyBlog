@@ -44,7 +44,7 @@ public class IndexController {
     @ModelAttribute
     public Page<Article> page(){
         //返回page类对象加入model模型中
-        return articleService.queryForAllBlog(1,4,"time");
+        return articleService.queryForAllBlog(1,10,"time");
     }
 
     @RequestMapping(value = {"/home","/"})
@@ -63,7 +63,7 @@ public class IndexController {
      */
     @RequestMapping("/{order}/{pageNo}")
     public String blog(Model model, @PathVariable("order") String order, @PathVariable("pageNo") int pageNo){
-        Page<Article> page = articleService.queryForAllBlog(pageNo,4,order);
+        Page<Article> page = articleService.queryForAllBlog(pageNo,10,order);
         model.addAttribute("page",page);
         model.addAttribute("order",order);
         return "index";
@@ -174,13 +174,20 @@ public class IndexController {
 
     //读写图片
     @RequestMapping("/getImage")
-    public void getImage(@RequestParam String imgName,HttpServletResponse response){
+    public void getImage(@RequestParam(required = false) String imgName,@RequestParam(required = false)Integer usrId,HttpServletResponse response,HttpServletRequest request){
         String picUrl = "/home/hqs/image/";
-        FileInputStream in;
+        InputStream in;
         response.setContentType("application/octet-stream;charset=UTF-8");
-
+        String img;
+        if(usrId!=null)
+            img = userService.getUserById(usrId).getPortrait();
+        else
+            img = imgName;
         try {
-            in = new FileInputStream(picUrl+imgName);
+            if(img==null)
+                in = request.getServletContext().getResourceAsStream("/img/img2.png");
+            else
+                in = new FileInputStream(picUrl+img);
             int i = in.available();
             byte[] data = new byte[i];
             in.read(data);

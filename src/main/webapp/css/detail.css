@@ -6,9 +6,6 @@
     font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
-.info{
-    font-family: 黑体;
-}
 .image{
     width:350px;
     height:auto;
@@ -32,7 +29,6 @@ hr{
 .commArea{
     width: 620px;
     margin: 0 0 5px 55px;
-    font-family: Calibri;
 }
 .comments{
     margin: 10px 50px 100px 60px;
@@ -51,16 +47,4 @@ hr{
     margin-bottom: 5px;
     font-family: "微软雅黑";
 }
-.return,.delete,.edit{
-    color: whitesmoke;text-decoration: none;font-family: 微软雅黑
-}
-.return button{
-    margin-left: 635px;margin-bottom: 120px;margin-top: -150px;
-}
-.edit button{
-    margin-left: 55px;margin-bottom: 120px;
-}
-.delete button{
-    margin-top: -120px;
-    margin-left: 5px;
-}
+

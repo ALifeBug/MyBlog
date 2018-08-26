@@ -118,7 +118,7 @@ public class ArticleService {
             article.setImage(image);
         }
         article.setTitle(title);
-        article.setContent(content);
+        article.setContent(content.replaceAll("\n","<br>").replaceAll(" ","&nbsp;"));
 
         //更新博客
         articleDao.update(article);
