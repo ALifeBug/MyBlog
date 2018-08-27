@@ -1,13 +1,17 @@
 package com.ssh.controller;
 
+import com.ssh.entity.Article;
 import com.ssh.entity.Follow;
+import com.ssh.entity.Star;
 import com.ssh.entity.User;
+import com.ssh.service.ArticleService;
 import com.ssh.service.FollowService;
 import com.ssh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +35,9 @@ public class UserController {
 
     @Autowired
     private FollowService followService;
+
+    @Autowired
+    private ArticleService articleService;
 
     //获取session中的用户
     private User getSessionUser(HttpSession session){
@@ -117,6 +124,54 @@ public class UserController {
         //调用用户编辑信息方法，再重定向回我的空间
         userService.edit(user,portrait,interest,description);
         return "redirect:/user/mySpace";
+    }
+
+    //点赞
+    @RequestMapping(value = "/like",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> like(@RequestParam("blogId") String blogId,@RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.like(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
+    }
+
+    //收藏
+    @RequestMapping(value = "/star",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> star(@RequestParam("blogId") String blogId,@RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.star(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
+    }
+
+    @RequestMapping("/favorite")
+    public String favorite(HttpSession session,Model model){
+        User user = (User)session.getAttribute("user");
+        List<Star> stars = articleService.favorite(user.getId());
+        Map<Star,Article> map = new HashMap<Star, Article>();
+        for(Star star:stars){
+            map.put(star,articleService.queryById(star.getBlogId()));
+        }
+        model.addAttribute("favorite",map);
+        return "favorite";
+    }
+
+    @RequestMapping("/unstar")
+    public String unstar(@RequestParam Integer blogId, HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(articleService.unstar(blogId,user.getId())){
+            return "redirect:/user/favorite";
+        }else
+            return "error";
+
     }
 
 

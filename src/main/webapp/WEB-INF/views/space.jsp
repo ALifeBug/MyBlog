@@ -73,21 +73,23 @@
                 <c:set var="startIndex" value="${fn:length(user.articles)-1}"/>
                     <div style="margin:20px 0">
                     <c:forEach items="${user.articles}" var="blog" varStatus="status">
-                        <div>
-                            <a href="${path}/index/details/${blog.id}" style="font-size: 20px;color: #dc3545;">${blog.title}</a>
-                        </div>
-                        <div class="articleInfo">
-                            <div style="float: left">
-                                ${blog.editor}&nbsp;&nbsp;
-                                浏览:${blog.browserCount}&nbsp;|&nbsp;评论:${blog.commentCount}
+                        <c:if test="${user.articles[startIndex - status.index].secret eq 0}">
+                            <div>
+                                <a href="${path}/index/details/${blog.id}" style="font-size: 20px;color: #dc3545;">${user.articles[startIndex - status.index].title}</a>
                             </div>
-                            <div style="color: #6c757d;font-size: 12px;float: right">
-                                <fmt:formatDate value="${blog.time}"  pattern="yyyy-MM-dd HH:mm"/>
+                            <div class="articleInfo">
+                                <div style="float: left">
+                                    ${user.articles[startIndex - status.index].editor}&nbsp;&nbsp;
+                                    浏览:${user.articles[startIndex - status.index].browserCount}&nbsp;|&nbsp;评论:${user.articles[startIndex - status.index].commentCount}
+                                </div>
+                                <div style="color: #6c757d;font-size: 12px;float: right">
+                                    <fmt:formatDate value="${user.articles[startIndex - status.index].time}"  pattern="yyyy-MM-dd HH:mm"/>
+                                </div>
+                                <div style="clear: both"></div>
                             </div>
-                            <div style="clear: both"></div>
-                        </div>
-                        <hr/>
-                        </c:forEach>
+                            <hr/>
+                        </c:if>
+                    </c:forEach>
                     </div>
             </div>
 

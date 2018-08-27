@@ -62,11 +62,15 @@
                     </h2>
                     <c:if test="${!empty follower}">
                         <c:forEach items="${follower}" var="follow">
-                            <div class="follow">
-                                <img src="${path}/index/getImage?usrId=${follow.followedId}" style="border-radius: 50%;width: 35px;height: 35px">
-                                <a href="${path}/user/space?id=${follow.followedId}">${follow.followed}</a>
-                                <span class="badge badge-primary" style="font-size: 12px">${follow.update}</span>
+                            <a href="${path}/user/space?id=${follow.followedId}" style="text-decoration: none">
+                            <div class="card" style="width: 830px;margin: 10px auto">
+                                <div class="card-body">
+                                    <img src="${path}/index/getImage?usrId=${follow.followedId}" style="height: 30px;width: 30px;border-radius: 4px" align="absmiddle">
+                                    <span style="font-size: 16px">${follow.followed}</span>
+                                    <span class="badge badge-primary" style="font-size: 10px">${follow.update}</span>
+                                </div>
                             </div>
+                            </a>
                         </c:forEach>
                     </c:if>
                     <c:if test="${empty follower}">
@@ -83,10 +87,14 @@
                 </h2>
                 <c:if test="${!empty followed}">
                     <c:forEach items="${followed}" var="follow">
-                        <div class="follow">
-                            <img src="${path}/index/getImage?usrId=${follow.followerId}" style="border-radius: 50%;width: 35px;height: 35px">
-                            <a href="${path}/user/space?id=${follow.followerId}" style="color: rgba(61,204,17,0.82);">${follow.follower}</a>
-                        </div>
+                        <a href="${path}/user/space?id=${follow.followerId}" style="text-decoration: none">
+                            <div class="card" style="width: 830px;margin: 10px auto">
+                                <div class="card-body" >
+                                    <img src="${path}/index/getImage?usrId=${follow.followerId}" style="height: 30px;width: 30px;border-radius: 4px;" align="absmiddle">
+                                    <span style="color: rgba(61,204,17,0.82);font-size: 16px;">${follow.follower}</span>
+                                </div>
+                            </div>
+                        </a>
                     </c:forEach>
                 </c:if>
                 <c:if test="${empty followed}">

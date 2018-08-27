@@ -43,9 +43,9 @@ public class ArticleDao extends BaseDao<Article> {
     public List<Article> queryForAll(final Page<Article> page, final String order){
         return getHibernateTemplate().execute(new HibernateCallback<List<Article>>() {
             public List<Article> doInHibernate(Session session) throws HibernateException {
-                String hql1 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a order by a.browserCount desc";
-                String hql2 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a order by a.commentCount desc";
-                String hql3 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a order by a.time desc";
+                String hql1 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.browserCount desc ";
+                String hql2 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.commentCount desc";
+                String hql3 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.time desc";
                 String hql;
                 if(order.equals("browser")) hql=hql1;
                 else if(order.equals("comment")) hql=hql2;
@@ -74,7 +74,7 @@ public class ArticleDao extends BaseDao<Article> {
      * @return 一共有多少博客
      */
     public int queryForAllCount(){
-        Long value = (Long)find("select count(id) from Article").iterator().next();
+        Long value = (Long)find("select count(id) from Article a where a.notice = 1").iterator().next();
         return value.intValue();
     }
 

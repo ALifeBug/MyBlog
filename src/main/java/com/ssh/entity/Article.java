@@ -1,10 +1,6 @@
 package com.ssh.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -34,6 +30,12 @@ public class Article {
     @Column(name = "COMMENT_COUNT",nullable = false)
     private Integer commentCount;//评论次数
 
+    @Column(name = "LIKE_COUNT")
+    private Integer likeCount;//点赞次数
+
+    @Column(name = "STAR_COUNT")
+    private Integer starCount;//收藏次数
+
     @Column(name = "EDITOR")
     private String editor;//作者
 
@@ -41,7 +43,13 @@ public class Article {
     private Integer editorId;
 
     @Column(name = "IMAGE")
-    private String image;
+    private String image;//配图
+
+    @Column(name = "NOTICE")
+    private Integer notice;//推荐
+
+    @Column(name = "SECRET")
+    private Integer secret;//私密
 
     public Article(){}
 
@@ -117,8 +125,39 @@ public class Article {
         this.image = image;
     }
 
+    public Integer getNotice() {
+        return notice;
+    }
 
-    public Article(Integer id,String title, Date time, Integer browserCount, Integer commentCount, String editor) {
+    public void setNotice(Integer notice) {
+        this.notice = notice;
+    }
+
+    public Integer getSecret() {
+        return secret;
+    }
+
+    public void setSecret(Integer secret) {
+        this.secret = secret;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Integer getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(Integer starCount) {
+        this.starCount = starCount;
+    }
+
+    public Article(Integer id, String title, Date time, Integer browserCount, Integer commentCount, String editor) {
         this.id = id;
         this.title = title;
         this.time = time;

@@ -40,6 +40,8 @@
 .Info{
     clear: both;
     margin-bottom: 30px;
+    height: 600px;
+    overflow: auto;
 }
 .Info h2{
     border-bottom: #080808 solid 2px;margin: 10px 20px 0 20px;height: 26px;line-height: 27px;font-size: 16px;font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;letter-spacing: 2px
@@ -47,7 +49,4 @@
 .Info h2 p { background: #474645; width: 180px; color: #fff; text-align: center; box-shadow: #999 3px -5px 1px; }
 .Info h2 p span { color: #38b3d4; }
 .hint{margin: 20px 0 10px 50px;font-size: 20px;text-align: center;font-family: 华文彩云}
-.follow{margin: 20px 0 10px 50px}
-.follow img{border-radius: 50%; width:30px;height:30px}
-.follow a{font-family: Consolas;font-size: 18px;color: rgba(30,105,204,0.82);text-decoration: none;position: relative;top: 5px;}
-.follow span{font-size: 15px;font-family: '微软雅黑 Light';position: relative;top: 5px;}
+.card:hover{text-decoration: none;background: #f8f9fa}

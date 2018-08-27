@@ -76,12 +76,20 @@ public class IndexController {
      * @return 该博客详细信息
      */
     @RequestMapping("/details/{id}")
-    public String detail(@PathVariable("id") Integer blogId,Model model){
+    public String detail(@PathVariable("id") Integer blogId,Model model,HttpSession session){
         Article article = articleService.queryById(blogId);
         //浏览量加一
         articleService.BrowserCountIncrement(blogId);
         List<Comment> comments = commentService.getByBlogId(blogId);
-        model.addAttribute("article",article).addAttribute("comments",comments).addAttribute("comment",new Comment());
+
+        //是否点过赞
+        User user = (User)session.getAttribute("user");
+        Integer isLike=0,isStar=0;
+        if(user!=null) {
+            if (articleService.isLike(blogId, user.getId())) isLike = 1;
+            if (articleService.isStar(blogId,user.getId())) isStar = 1;
+        }
+        model.addAttribute("article",article).addAttribute("comments",comments).addAttribute("comment",new Comment()).addAttribute("isLike",isLike).addAttribute("isStar",isStar);
 
         return "blog_detail";
     }

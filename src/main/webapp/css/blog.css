@@ -7,8 +7,8 @@
     font-size: 16px;
     font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
 }
-.blogList{
-    margin:30px 40px;
+.blogList {
+    margin:20px 40px;
 }
 .blogList h3{
     margin-top: 20px;
@@ -22,14 +22,6 @@
     color: rgba(204,24,18,0.82);
     text-decoration: none;
 }
-/*.blogContent{
-    width: 500px;
-    overflow: hidden;
-    font-size: 15px;
-    height: 100px;
-    word-break:normal;
-    white-space: normal;
-}*/
 .blogInfo{
     float: right;
 }
@@ -45,5 +37,6 @@
     width: 85%;
     margin: 10px auto;
 }
+
 
 

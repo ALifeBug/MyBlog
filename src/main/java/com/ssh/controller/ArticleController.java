@@ -54,11 +54,13 @@ public class ArticleController implements HandlerExceptionResolver{
     //保存博客
     @RequestMapping("/save")
     public String saveArticle(@RequestParam("title") String title,@RequestParam("content")String content, HttpSession session,
-                              @RequestParam("pageNo")Integer pageNo){
+                              @RequestParam("pageNo")Integer pageNo,@RequestParam("notice")Integer notice,@RequestParam("secret")Integer secret){
         //设置博客标题和内容
         Article article = new Article();
         article.setContent(content);
         article.setTitle(title);
+        article.setNotice(notice);
+        article.setSecret(secret);
         String image = (String)session.getAttribute("image");
         if(image!=null)
             article.setImage(image);
@@ -79,6 +81,8 @@ public class ArticleController implements HandlerExceptionResolver{
         model.addAttribute("id",blogId);
         model.addAttribute("image",article.getImage());
         model.addAttribute("title",article.getTitle());
+        model.addAttribute("notice",article.getNotice());
+        model.addAttribute("secret",article.getSecret());
         model.addAttribute("content",article.getContent().replaceAll("<br>","\n").replaceAll("&nbsp;"," "));
 
         return "editblog";
@@ -87,10 +91,11 @@ public class ArticleController implements HandlerExceptionResolver{
     //编辑博客
     @RequestMapping("/edit")
     public String edit(@RequestParam("title")String title,HttpSession session,
-                       @RequestParam("content")String content,@RequestParam("id")Integer id,@RequestParam("pageNo")Integer pageNo){
+                       @RequestParam("content")String content,@RequestParam("id")Integer id,@RequestParam("pageNo")Integer pageNo,
+                       @RequestParam("notice")Integer notice,@RequestParam("secret")Integer secret){
         Article article = articleService.queryById(id);
         String image = (String)session.getAttribute("image");
-        articleService.edit(article,image,title,content);
+        articleService.edit(article,image,title,content,notice,secret);
         return "redirect:/blog/details?blogId="+id+"&pageNo="+pageNo;
     }
 
@@ -103,7 +108,7 @@ public class ArticleController implements HandlerExceptionResolver{
 
     //返回博客详情页
     @RequestMapping("/details")
-    public String detail(@RequestParam("blogId") Integer blogId,Model model){
+    public String detail(@RequestParam("blogId") Integer blogId,Model model,HttpSession session){
         Article article = articleService.queryById(blogId);
 
         //浏览量加一
@@ -112,9 +117,19 @@ public class ArticleController implements HandlerExceptionResolver{
         //获取该博客下的所有评论
         List<Comment> comments = commentService.getByBlogId(blogId);
 
-        model.addAttribute("article",article).addAttribute("comments",comments).addAttribute("comment",new Comment());
+        //是否点过赞
+        User user = (User)session.getAttribute("user");
+        Integer isLike=0,isStar=0;
+        if(articleService.isLike(blogId,user.getId())) isLike = 1;
+        if(articleService.isStar(blogId,user.getId())) isStar = 1;
+
+        model.addAttribute("article",article)
+                .addAttribute("comments",comments)
+                .addAttribute("comment",new Comment()).addAttribute("isLike",isLike).addAttribute("isStar",isStar);
         return "blog_detail";
     }
+
+
 
     //处理文件上传超过最大体积的异常
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {

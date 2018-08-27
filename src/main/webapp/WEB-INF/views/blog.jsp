@@ -12,9 +12,10 @@
     <title>我的博客</title>
     <%@include file="header.jsp"%>
     <link rel="stylesheet" href="${path}/css/fileinput.min.css">
+    <link href="${path}/css/blog.css" rel="stylesheet">
+    <link rel="stylesheet" href="${path}/css/style.css">
     <script src="${path}/js/fileinput.min.js"></script>
     <script src="${path}/js/zh.js"></script>
-    <link href="${path}/css/blog.css" rel="stylesheet">
     <jsp:useBean id="article" class="com.ssh.entity.Article" scope="request"/>
 </head>
 <body>
@@ -28,18 +29,35 @@
                 <div class="form-group">
                     <textarea class="form-control content" rows="30" placeholder="开始创作" name="content" id="content" required></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group" title="添加配图">
                     <div class="col-sm-10" style="margin-left: -16px">
                         <input type="file" name="myfile" data-ref="url2" class="col-sm-10 myfile" value=""/>
                         <input type="hidden" name="url2" value="">
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="switch switch-blue" style="float: left;margin-right: 20px" title="推荐后显示在首页">
+                        <input type="radio" class="switch-input" name="notice" value="1" id="notice">
+                        <label for="notice" class="switch-label switch-label-off">推荐</label>
+                        <input type="radio" class="switch-input" name="notice" value="0" id="keep" checked>
+                        <label for="keep" class="switch-label switch-label-on">保留</label>
+                        <span class="switch-selection"></span>
+                    </div>
+                    <div class="switch switch-yellow" style="float: left" title="设为私密加保留后仅自己可见">
+                        <input type="radio" class="switch-input" name="secret" value="1" id="secret">
+                        <label for="secret" class="switch-label switch-label-off">私密</label>
+                        <input type="radio" class="switch-input" name="secret" value="0" id="public" checked>
+                        <label for="public" class="switch-label switch-label-on">公开</label>
+                        <span class="switch-selection"></span>
+                    </div>
+                </div>
+                <div style="clear: both;height: 20px;"></div>
                 <div>
                     <input type="submit" value="保存" class="btn btn-success" style="margin-left: 65px"/>
                 </div>
             </form>
             <div class="blog">
-                <h5 style="margin-left: 40px;margin-top: 40px;padding-bottom: 5px;width: 800px;border-bottom: 1px solid">历史博客</h5>
+                <h5 style="margin-left: 40px;margin-top: 40px;padding-bottom: 5px;width: 800px;border-bottom: 1px solid;">历史博客</h5>
                 <c:if test="${empty sessionScope.user.articles}">
                     <div>
                         <div style="margin: 20px 0 10px 50px;font-size: 20px;text-align: center;">
@@ -50,7 +68,7 @@
                 <c:forEach items="${page.list}" var="blog">
                     <div class="blogList">
                         <h3><a href="${path}/blog/details?blogId=${blog.id}&pageNo=${page.pageNo}">${blog.title}</a></h3>
-                        <div style="clear: both;">
+                        <div style="height: 25px;width: 100%">
                             <span class="blogRef"><a href="${path}/blog/details?blogId=${blog.id}&pageNo=${page.pageNo}">阅读全文</a></span>
                             <span class="blogInfo">
                                 <fmt:formatDate value="${blog.time}"  pattern="yyyy-MM-dd HH:mm"/>&nbsp;&nbsp;
@@ -59,7 +77,7 @@
                             </span>
                         </div>
                     </div>
-                    <hr style="height:3px;border:none;border-top:1px groove skyblue;width: 740px;"/>
+                    <hr/>
                 </c:forEach>
             </div>
             <div style="margin: 50px 35px">

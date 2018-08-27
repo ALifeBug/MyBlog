@@ -15,6 +15,7 @@
 <head>
     <title>${title}-修改</title>
     <link href="${path}/css/editblog.css" rel="stylesheet" />
+    <link href="${path}/css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="iBody">
@@ -43,6 +44,23 @@
                     <label for="description">内容</label>
                     <textarea id="description"  class="form-control" rows="30" style="width: 80%" name="content" maxlength="500" required>${content}</textarea>
                 </div>
+                <div class="form-group">
+                    <div class="switch switch-blue" style="float: left;margin-right: 20px">
+                        <input type="radio" class="switch-input" name="notice" value="1" id="notice">
+                        <label for="notice" class="switch-label switch-label-off">推荐</label>
+                        <input type="radio" class="switch-input" name="notice" value="0" id="keep">
+                        <label for="keep" class="switch-label switch-label-on">保留</label>
+                        <span class="switch-selection"></span>
+                    </div>
+                    <div class="switch switch-yellow" style="float: left">
+                        <input type="radio" class="switch-input" name="secret" value="1" id="secret">
+                        <label for="secret" class="switch-label switch-label-off">私密</label>
+                        <input type="radio" class="switch-input" name="secret" value="0" id="public">
+                        <label for="public" class="switch-label switch-label-on">公开</label>
+                        <span class="switch-selection"></span>
+                    </div>
+                </div>
+                <div style="clear: both;height: 20px;"></div>
                 <input type="submit" value="保存" class="btn btn-default">
             </form>
         </div>
@@ -51,5 +69,17 @@
     <%@include file="upload.jsp"%>
     <div style="clear: both"></div>
 </div>
+<script>
+    $(function () {
+        if(${notice eq 1})
+            $("#notice").attr("checked",true);
+        else
+            $("#keep").attr("checked",true);
+        if(${secret eq 1})
+            $("#secret").attr("checked",true);
+        else
+            $("#public").attr("checked",true);
+    })
+</script>
 </body>
 </html>

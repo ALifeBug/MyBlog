@@ -12,6 +12,7 @@
 <head>
     <title>${article.title}</title>
     <link href="${path}/css/detail.css" rel="stylesheet">
+    <script src="${path}/js/detail.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="iBody">
@@ -49,31 +50,45 @@
                 </div>
             </div>
             <div style="clear: both"></div>
+            <c:if test="${!empty sessionScope.user}">
+                <div style="margin-left: 55px;margin-top: 10px">
+                    <button class="btn btn-sm btn-primary" id="star_btn"><span class="glyphicon glyphicon-star" id="star">${article.starCount}</span></button>
+                    <button class="btn btn-sm btn-primary" id="like_btn"><span class="glyphicon glyphicon-thumbs-up" id="like">${article.likeCount}</span></button>
+                    <input type="hidden" value="${isLike}" id="isLike">
+                    <input type="hidden" value="${article.likeCount}" id="likeCount">
+                    <input type="hidden" value="${isStar}" id="isStar">
+                    <input type="hidden" value="${article.starCount}" id="starCount">
+                    <input type="hidden" value="${article.id}" id="blogId">
+                    <input type="hidden" value="${sessionScope.user.id}" id="usrId">
+                </div>
+            </c:if>
             <div class="commBanner"><span style="font-size: 20px" class="glyphicon glyphicon-comment">评论</span><span style="font-size: medium">(已有${article.commentCount}条评论)</span></div>
             <c:if test="${!empty sessionScope.user}">
-            <div class="commArea">
-                <form:form role="form" commandName="comment" action="${path}/comment/save?pageNo=${page.pageNo}" method="post" >
-                    <form:hidden path="blogId" value="${article.id}"/>
-                    <form:hidden path="userName" value="${sessionScope.user.name}"/>
-                    <form:hidden path="userId" value="${sessionScope.user.id}"/>
-                    <form:hidden path="image" value="${sessionScope.user.portrait}"/>
-                    <div class="input-group mb-3 " style="width: 100%;height: 40px;margin: 30px auto;font-size: 15px">
-                        <input type="text" class="form-control" placeholder="发表评论" id="name" name="content" required maxlength="100">
-                        <div class="input-group-append">
-                            <button class="btn btn-info"  id="search"><span class="glyphicon glyphicon-pencil"></span></button>
+                <div class="commArea">
+                    <form:form role="form" commandName="comment" action="${path}/comment/save?pageNo=${page.pageNo}" method="post" >
+                        <form:hidden path="blogId" value="${article.id}"/>
+                        <form:hidden path="userName" value="${sessionScope.user.name}"/>
+                        <form:hidden path="userId" value="${sessionScope.user.id}"/>
+                        <form:hidden path="image" value="${sessionScope.user.portrait}"/>
+                        <div class="input-group mb-3 " style="width: 100%;height: 40px;margin: 30px auto;font-size: 15px">
+                            <input type="text" class="form-control" placeholder="发表评论" id="name" name="content" required maxlength="100">
+                            <div class="input-group-append">
+                                <button class="btn btn-info"  id="search"><span class="glyphicon glyphicon-pencil"></span></button>
+                            </div>
                         </div>
-                    </div>
-                </form:form>
-            </div>
+                    </form:form>
+                </div>
             </c:if>
             <c:if test="${empty sessionScope.user}">
                 <div class="loginFail">
                     <h2><a href="${path}/index/loginForm" style="text-decoration: none;">登录后加入评论</a></h2>
                 </div>
             </c:if>
+            <c:if test="${!(fn:length(comments) eq 0)}">
             <div class="commBanner">
                 <span style="font-size: medium">最新评论</span>
             </div>
+            </c:if>
             <div class="comments">
                 <c:forEach var="comment" items="${comments}">
                     <div class="commInfo">

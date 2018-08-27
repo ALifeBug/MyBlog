@@ -12,6 +12,7 @@
         <a href="${path}/index/home" id="index"><span class="glyphicon glyphicon-home"></span>首页</a>
         <a href="${path}/blog/myBlog?pageNo=1" id="blog"><span class="glyphicon glyphicon-pencil"></span>博客</a>
         <a href="${path}/user/mySpace" id="user"><span class="glyphicon glyphicon-user"></span>空间</a>
+        <a href="${path}/user/favorite" id="favorite"><span class="glyphicon glyphicon-star"></span>收藏夹</a>
         <a href="${path}/about/about" id="about">关于我</a>
     </nav>
 </header>
