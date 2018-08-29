@@ -52,6 +52,9 @@ public class Article implements Serializable {
     @Column(name = "SECRET")
     private Integer secret;//私密
 
+    @Column(name = "ISMD")
+    private Integer isMd;//是否为markdown
+
     public Article(){}
 
     public Integer getId() {
@@ -156,6 +159,14 @@ public class Article implements Serializable {
 
     public void setStarCount(Integer starCount) {
         this.starCount = starCount;
+    }
+
+    public Integer getIsMd() {
+        return isMd;
+    }
+
+    public void setIsMd(Integer isMd) {
+        this.isMd = isMd;
     }
 
     public Article(Integer id, String title, Date time, Integer browserCount, Integer commentCount, String editor) {

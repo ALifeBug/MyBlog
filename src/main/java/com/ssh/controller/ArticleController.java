@@ -53,17 +53,33 @@ public class ArticleController implements HandlerExceptionResolver{
 
     //保存博客
     @RequestMapping("/save")
-    public String saveArticle(@RequestParam("title") String title,@RequestParam("content")String content, HttpSession session,
+    public String saveArticle(@RequestParam(value = "title",required = false) String title,@RequestParam(value = "content",required = false)String content,
+                              @RequestParam(value = "mdtitle",required = false) String mdtitle,@RequestParam(value = "mdcontent",required = false)String mdcontent,
+                              HttpSession session,
                               @RequestParam("pageNo")Integer pageNo,@RequestParam("notice")Integer notice,@RequestParam("secret")Integer secret){
         //设置博客标题和内容
+        if((content==null || content.equals("") || content.trim().equals("")) && (mdcontent==null || mdcontent.equals("") || mdcontent.trim().equals("")))
+            return "redirect:/blog/myBlog?pageNo="+pageNo;
         Article article = new Article();
-        article.setContent(content);
-        article.setTitle(title);
+        if(content==null || content.equals("")){
+            article.setContent(mdcontent);
+            article.setIsMd(1);
+        }
+        else {
+            article.setContent(content);
+            article.setIsMd(0);
+        }
+        System.out.println("content:"+content);
+        System.out.println("mdcontent:"+mdcontent);
+        if(title==null || title.equals("")) article.setTitle(mdtitle);
+        else article.setTitle(title);
         article.setNotice(notice);
         article.setSecret(secret);
         String image = (String)session.getAttribute("image");
-        if(image!=null)
+        if(image!=null) {
             article.setImage(image);
+            session.removeAttribute("image");
+        }
         //获取博客作者
         User user = (User)session.getAttribute("user");
 

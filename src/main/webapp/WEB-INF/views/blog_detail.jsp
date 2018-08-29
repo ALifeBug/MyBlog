@@ -12,12 +12,19 @@
 <head>
     <title>${article.title}</title>
     <link href="${path}/css/detail.css" rel="stylesheet">
+    <link rel="stylesheet" href="${path}/css/editormd.min.css">
     <script src="${path}/js/detail.js" type="text/javascript"></script>
+    <script src="${path}/lib/marked.min.js"></script>
+    <script src="${path}/lib/prettify.min.js"></script>
+    <script src="${path}/js/editormd.min.js"></script>
+    <script type="text/javascript">
+        editormd.markdownToHTML("content");
+    </script>
 </head>
 <body>
     <div class="iBody">
         <%@include file="nav.jsp"%>
-        <article>
+        <article style="padding:0 7%">
             <div class="blog">
                 <center>
                     <h2>${article.title}</h2>
@@ -42,16 +49,16 @@
                     </c:if>
                 </div>
                 </center>
-                <div style="width: 700px;margin: 10px 35px;font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;font-size: 17px;">
+                <div style="width: 900px;margin: 10px 0;font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;font-size: 17px;">
                     <c:if test="${!empty article.image}">
                         <img src="${path}/index/getImage?imgName=${article.image}" class="image"/>
                     </c:if>
-                    ${article.content}
+                    <div id="content">${article.content}</div>
                 </div>
             </div>
             <div style="clear: both"></div>
             <c:if test="${!empty sessionScope.user}">
-                <div style="margin-left: 55px;margin-top: 10px">
+                <div style="margin-top: 10px">
                     <button class="btn btn-sm btn-primary" id="star_btn"><span class="glyphicon glyphicon-star" id="star">${article.starCount}</span></button>
                     <button class="btn btn-sm btn-primary" id="like_btn"><span class="glyphicon glyphicon-thumbs-up" id="like">${article.likeCount}</span></button>
                     <input type="hidden" value="${isLike}" id="isLike">
@@ -70,7 +77,7 @@
                         <form:hidden path="userName" value="${sessionScope.user.name}"/>
                         <form:hidden path="userId" value="${sessionScope.user.id}"/>
                         <form:hidden path="image" value="${sessionScope.user.portrait}"/>
-                        <div class="input-group mb-3 " style="width: 100%;height: 40px;margin: 30px auto;font-size: 15px">
+                        <div class="input-group mb-3 " style="width:100%;height: 40px;margin: 30px auto;font-size: 15px">
                             <input type="text" class="form-control" placeholder="发表评论" id="name" name="content" required maxlength="100">
                             <div class="input-group-append">
                                 <button class="btn btn-info"  id="search"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -81,7 +88,7 @@
             </c:if>
             <c:if test="${empty sessionScope.user}">
                 <div class="loginFail">
-                    <h2><a href="${path}/index/loginForm" style="text-decoration: none;">登录后加入评论</a></h2>
+                    <h2><a href="${path}/index/loginForm">登录后加入评论</a></h2>
                 </div>
             </c:if>
             <c:if test="${!(fn:length(comments) eq 0)}">
@@ -113,7 +120,7 @@
                         </div>
                     </div>
                     <div style="clear: both"></div>
-                    <hr style="height:3px;border:none;border-top:1px groove skyblue;margin:10px 0;width: 610px;"/>
+                    <hr style="height:3px;border:none;border-top:1px groove skyblue;margin:10px 0;width: 90%;"/>
                 </c:forEach>
             </div>
         </article>

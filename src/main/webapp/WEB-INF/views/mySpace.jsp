@@ -15,7 +15,7 @@
 <body>
     <div class="iBody">
         <%@include file="nav.jsp"%>
-        <article>
+        <article style="padding:0 10px">
                 <div style="width: 100%;height: 300px">
                     <div class="portrait">
                         <c:if test="${!empty sessionScope.user.portrait}">
@@ -62,8 +62,8 @@
                     </h2>
                     <c:if test="${!empty follower}">
                         <c:forEach items="${follower}" var="follow">
-                            <a href="${path}/user/space?id=${follow.followedId}" style="text-decoration: none">
-                            <div class="card" style="width: 830px;margin: 10px auto">
+                            <a href="${path}/user/space?id=${follow.followedId}">
+                            <div class="card" style="width:95%;margin: 10px auto">
                                 <div class="card-body">
                                     <img src="${path}/index/getImage?usrId=${follow.followedId}" style="height: 30px;width: 30px;border-radius: 4px" align="absmiddle">
                                     <span style="font-size: 16px">${follow.followed}</span>
@@ -87,8 +87,8 @@
                 </h2>
                 <c:if test="${!empty followed}">
                     <c:forEach items="${followed}" var="follow">
-                        <a href="${path}/user/space?id=${follow.followerId}" style="text-decoration: none">
-                            <div class="card" style="width: 830px;margin: 10px auto">
+                        <a href="${path}/user/space?id=${follow.followerId}">
+                            <div class="card" style="width: 95%;margin: 10px auto">
                                 <div class="card-body" >
                                     <img src="${path}/index/getImage?usrId=${follow.followerId}" style="height: 30px;width: 30px;border-radius: 4px;" align="absmiddle">
                                     <span style="color: rgba(61,204,17,0.82);font-size: 16px;">${follow.follower}</span>

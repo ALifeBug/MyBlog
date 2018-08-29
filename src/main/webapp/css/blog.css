@@ -1,11 +1,5 @@
-.title{
-    height: 45px;
-    font-size: 18px;
-    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
-}
-.content{
-    font-size: 16px;
-    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+article{
+    padding-top: 20px;
 }
 .blogList {
     margin:20px 40px;
@@ -37,6 +31,9 @@
     width: 85%;
     margin: 10px auto;
 }
+.history{margin-left: 40px;margin-top: 40px;padding-bottom: 5px;width: 90%;border-bottom: 1px solid;}
+.hisblog{height: 25px;width: 100%}
+.noblog{margin: 20px 0 10px 50px;font-size: 20px;text-align: center;}
 
 
 

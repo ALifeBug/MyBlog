@@ -11,25 +11,37 @@
 <head>
     <title>我的博客</title>
     <%@include file="header.jsp"%>
+    <link rel="stylesheet" href="${path}/css/editormd.min.css">
     <link rel="stylesheet" href="${path}/css/fileinput.min.css">
     <link href="${path}/css/blog.css" rel="stylesheet">
     <link rel="stylesheet" href="${path}/css/style.css">
+    <script src="${path}/js/editormd.min.js"></script>
     <script src="${path}/js/fileinput.min.js"></script>
     <script src="${path}/js/zh.js"></script>
+    <script src="${path}/js/blog.js"></script>
     <jsp:useBean id="article" class="com.ssh.entity.Article" scope="request"/>
+    <meta charset="utf-8">
 </head>
 <body>
     <div class="iBody">
         <%@include file="nav.jsp"%>
-        <article style="margin-top: 20px">
+        <article>
             <form action="${path}/blog/save?pageNo=${page.pageNo}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" class="form-control title" placeholder="标题" name="title" id="title" required />
+                    <input type="text" class="form-control" style="width: 90%;display: none" placeholder="标题" name="mdtitle"  id="mdtitle"/>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control content" rows="30" placeholder="开始创作" name="content" id="content" required></textarea>
+                    <input type="text" class="form-control" style="width: 90%" placeholder="标题" name="title"  id="txtitle"/>
                 </div>
-                <div class="form-group" title="添加配图">
+                <div class="form-group" id="editortxt">
+                    <textarea  class="form-control content" rows="30" placeholder="开始创作" name="content" id="content" style="width: 90%;"></textarea>
+                </div>
+                <div class="editormd" id="editormd" style="display: none">
+                    <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
+                    <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+                    <textarea class="editormd-html-textarea" name="mdcontent" id="mdcontent"></textarea>
+                </div>
+                <div class="form-group" title="添加配图" id="image">
                     <div class="col-sm-10" style="margin-left: -16px">
                         <input type="file" name="myfile" data-ref="url2" class="col-sm-10 myfile" value=""/>
                         <input type="hidden" name="url2" value="">
@@ -52,15 +64,16 @@
                     </div>
                 </div>
                 <div style="clear: both;height: 20px;"></div>
-                <div>
-                    <input type="submit" value="保存" class="btn btn-success" style="margin-left: 65px"/>
+                <div class="form-group">
+                    <input type="submit" value="保存" class="btn btn-success"/>
+                    <input type="button" value="切换" class="btn btn-primary" style="margin-left: 10px" id="switch">
                 </div>
             </form>
             <div class="blog">
-                <h5 style="margin-left: 40px;margin-top: 40px;padding-bottom: 5px;width: 800px;border-bottom: 1px solid;">历史博客</h5>
+                <h5 class="history">历史博客</h5>
                 <c:if test="${empty sessionScope.user.articles}">
                     <div>
-                        <div style="margin: 20px 0 10px 50px;font-size: 20px;text-align: center;">
+                        <div class="noblog">
                             您还没有博客哦,赶快写一篇吧。
                         </div>
                     </div>
@@ -68,7 +81,7 @@
                 <c:forEach items="${page.list}" var="blog">
                     <div class="blogList">
                         <h3><a href="${path}/blog/details?blogId=${blog.id}&pageNo=${page.pageNo}">${blog.title}</a></h3>
-                        <div style="height: 25px;width: 100%">
+                        <div class="hisblog">
                             <span class="blogRef"><a href="${path}/blog/details?blogId=${blog.id}&pageNo=${page.pageNo}">阅读全文</a></span>
                             <span class="blogInfo">
                                 <fmt:formatDate value="${blog.time}"  pattern="yyyy-MM-dd HH:mm"/>&nbsp;&nbsp;

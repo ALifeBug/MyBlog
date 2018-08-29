@@ -18,4 +18,11 @@ public class CommentDao extends BaseDao<Comment> {
     public List<Comment> getByBlogId(Integer blogId){
         return find("from Comment c where c.blogId = ? order by c.time desc",blogId);
     }
+
+    public void deleteByBlogId(Integer blogId){
+        List<Comment> comments = getByBlogId(blogId);
+        for(Comment comment:comments){
+            getHibernateTemplate().delete(comment);
+        }
+    }
 }

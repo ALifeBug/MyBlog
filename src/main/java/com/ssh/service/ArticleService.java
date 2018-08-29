@@ -32,6 +32,8 @@ public class ArticleService {
     @Autowired
     private StarDao starDao;
 
+    @Autowired
+    private CommentDao commentDao;
     /**
      *
      * @param id
@@ -59,7 +61,9 @@ public class ArticleService {
         article.setStarCount(0);
         //替换空格与换行,再次显示保留原格式
         String content = article.getContent();
-        article.setContent(content.replaceAll("\n","<br>").replaceAll(" ","&nbsp;"));
+        if(article.getIsMd()==0) {
+            article.setContent(content.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+        }
         //保存用户的文章
         articleDao.save(article);
         user.getArticles().add(article);
@@ -133,7 +137,9 @@ public class ArticleService {
             article.setImage(image);
         }
         article.setTitle(title);
-        article.setContent(content.replaceAll("\n","<br>").replaceAll(" ","&nbsp;"));
+        if(article.getIsMd()==0) {
+            article.setContent(content.replaceAll("\n", "<br>").replaceAll(" ", "&nbsp;"));
+        }
         article.setNotice(notice);
         article.setSecret(secret);
         //更新博客
@@ -232,6 +238,8 @@ public class ArticleService {
             for(Star star : stars){
                 starDao.remove(star);
             }
+            //删除评论
+            commentDao.deleteByBlogId(id);
             //更新关注信息，更新量减一
             List<Follow> follows = followDao.getByFollowed(article.getEditor());
             Integer update;

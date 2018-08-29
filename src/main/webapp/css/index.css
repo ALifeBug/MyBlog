@@ -11,7 +11,7 @@
     height: 300px;
     background: url("../img/img1.jpg") no-repeat center;
     padding-top: 100px;
-    padding-left: 280px;
+    padding-left: 30%;
     color: #080808;
 }
 .bgImg h6:hover{

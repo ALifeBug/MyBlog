@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">内容</label>
-                    <textarea id="description"  class="form-control" rows="30" style="width: 80%" name="content" maxlength="500" required>${content}</textarea>
+                    <textarea id="description"  class="form-control" rows="30" style="width: 80%" name="content" required>${content}</textarea>
                 </div>
                 <div class="form-group">
                     <div class="switch switch-blue" style="float: left;margin-right: 20px">
