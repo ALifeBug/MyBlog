@@ -43,7 +43,7 @@
                         <label for="keep" class="switch-label switch-label-on">保留</label>
                         <span class="switch-selection"></span>
                     </div>
-                    <div class="switch switch-yellow" style="float: left" title="设为私密加保留后仅自己可见">
+                    <div class="switch switch-yellow" style="float: left" title="设为私密后仅自己可见">
                         <input type="radio" class="switch-input" name="secret" value="1" id="secret">
                         <label for="secret" class="switch-label switch-label-off">私密</label>
                         <input type="radio" class="switch-input" name="secret" value="0" id="public" checked>

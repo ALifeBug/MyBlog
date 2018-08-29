@@ -1,6 +1,7 @@
 package com.ssh.util;
 
 import com.ssh.entity.User;
+import com.ssh.service.ArticleService;
 import com.ssh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +20,9 @@ public class LoginInterceptor implements HandlerInterceptor{
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ArticleService articleService;
+
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object sessionuser = request.getSession().getAttribute("user");
         if(sessionuser == null){
@@ -35,12 +39,15 @@ public class LoginInterceptor implements HandlerInterceptor{
                     }
                 }
                 if(!"".equals(loginCookieUserName) && !"".equals(loginCookiePassword)){
-                    User user = userService.getUserByName(loginCookieUserName);
-                    if(user!=null && loginCookiePassword.equals(user.getPassword())){
-                        request.getSession().setAttribute("user", user);
+                    String pwd = userService.getPwdByName(loginCookieUserName);
+                    if(loginCookiePassword.equals(pwd)){
+                        request.getSession().setAttribute("user", userService.getUserByName(loginCookieUserName));
                     }
                 }
             }
+        }
+        if(request.getSession().getAttribute("hotBlog")==null) {
+            request.getSession().setAttribute("hotBlog", articleService.findHot());
         }
         return true;
     }

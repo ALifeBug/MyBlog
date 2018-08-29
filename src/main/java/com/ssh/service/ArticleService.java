@@ -3,6 +3,7 @@ package com.ssh.service;
 import com.ssh.dao.*;
 import com.ssh.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,13 @@ public class ArticleService {
      */
     public Article queryById(Integer id){
         return articleDao.getById(id);
+    }
+
+
+    @Cacheable(value = "user",key = "'hotArticle'")
+    public List<Article> findHot(){
+        System.out.println("打印则未进入缓存");
+        return articleDao.queryHot();
     }
 
     public void saveArticle(Article article, User user){

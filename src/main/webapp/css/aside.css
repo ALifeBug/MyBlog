@@ -1,3 +1,5 @@
+.form{height: 420px;}
+.form p{margin-top: 10px}
 .form input {
     font-size: 14px;
     color: black;
@@ -28,3 +30,6 @@ aside p{
 }
 .usrPortrait{border-radius: 50%; width:20px; height:20px}
 .usrText{font-size: 15px;font-family: 微软雅黑;color: #2aabd2}
+.hot{width: 170px;height: 30px;padding: 5px 0;border-bottom: 1px solid #e41635;font-size: 16px;cursor: pointer}
+.hot:hover{width: 240px;transition: 1s ease}
+.hotblog{display: block;margin: 5px 0;font-size: 15px}

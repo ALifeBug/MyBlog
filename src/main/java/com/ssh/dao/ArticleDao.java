@@ -25,7 +25,7 @@ public class ArticleDao extends BaseDao<Article> {
     public List<Article> queryForList(final Page<Article> page,final String name){
             return   getHibernateTemplate().execute(new HibernateCallback<List<Article>>() {
                 public List<Article> doInHibernate(Session session) throws HibernateException {
-                    String hql = "from Article a where a.editor = ? order by a.time desc ";
+                    String hql = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.editor = ? order by a.time desc ";
                     Query query = session.createQuery(hql);
                     query.setString(0,name);
                     query.setFirstResult(page.getOffset());
@@ -43,9 +43,9 @@ public class ArticleDao extends BaseDao<Article> {
     public List<Article> queryForAll(final Page<Article> page, final String order){
         return getHibernateTemplate().execute(new HibernateCallback<List<Article>>() {
             public List<Article> doInHibernate(Session session) throws HibernateException {
-                String hql1 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.browserCount desc ";
-                String hql2 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.commentCount desc";
-                String hql3 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 order by a.time desc";
+                String hql1 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 and secret = 0 order by a.browserCount desc ";
+                String hql2 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 and secret = 0 order by a.commentCount desc";
+                String hql3 = "select new Article(id,title,time,browserCount,commentCount,editor) from Article a where a.notice = 1 and secret = 0 order by a.time desc";
                 String hql;
                 if(order.equals("browser")) hql=hql1;
                 else if(order.equals("comment")) hql=hql2;
@@ -74,7 +74,7 @@ public class ArticleDao extends BaseDao<Article> {
      * @return 一共有多少博客
      */
     public int queryForAllCount(){
-        Long value = (Long)find("select count(id) from Article a where a.notice = 1").iterator().next();
+        Long value = (Long)find("select count(id) from Article a where a.notice = 1 and secret = 0").iterator().next();
         return value.intValue();
     }
 
@@ -87,6 +87,17 @@ public class ArticleDao extends BaseDao<Article> {
         return find("select new Article(id,title,time,browserCount,commentCount,editor)  from Article a where a.editor=?",name);
     }
 
+    public List<Article> queryHot(){
+        return getHibernateTemplate().execute(new HibernateCallback<List<Article>>() {
+            public List<Article> doInHibernate(Session session) throws HibernateException {
+                String hql = "select new Article(id,title,editor) from Article a where a.notice = 1 and secret = 0 order by a.likeCount";
+                Query query = session.createQuery(hql);
+                query.setFirstResult(0);
+                query.setMaxResults(5);
+                return query.list();
+            }
+        });
+    }
 
 
 

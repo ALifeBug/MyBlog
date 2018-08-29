@@ -1,6 +1,7 @@
 package com.ssh.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "ARTICLE")
-public class Article {
+public class Article implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -163,6 +164,12 @@ public class Article {
         this.time = time;
         this.browserCount = browserCount;
         this.commentCount = commentCount;
+        this.editor = editor;
+    }
+
+    public Article(Integer id,String title, String editor) {
+        this.id = id;
+        this.title = title;
         this.editor = editor;
     }
 }

@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/beans
@@ -11,7 +11,8 @@
                            http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
                            http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx.xsd"
+                           http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache.xsd"
 >
 
     <context:component-scan base-package="com.ssh"/>
@@ -22,6 +23,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     <mvc:default-servlet-handler/>
+    <cache:annotation-driven cache-manager="redisCacheManager" key-generator="keyGenerator"/>
 
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/css/**" location="/css/"/>
@@ -50,6 +52,7 @@
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
 
     <context:property-placeholder location="classpath:db.properties" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
@@ -183,11 +186,13 @@
         <property name="defaultExpiration" value="${redis.expiration}"/>
     </bean>
 
-    <bean id="redisCacheConfig" class="cn.qlq.util.RedisCacheConfig">
+    <bean id="redisCacheConfig" class="com.ssh.util.RedisCacheConfig">
         <constructor-arg ref="jedisConnectionFactory"/>
         <constructor-arg ref="redisTemplate"/>
         <constructor-arg ref="redisCacheManager"/>
     </bean>
+
+    <bean id="keyGenerator" class="com.ssh.util.KeyGenerator"/>
 
     <!--自定义redis工具类,在需要缓存的地方注入此类  -->
     <bean id="redisUtil" class="com.ssh.util.RedisUtil">
