@@ -39,8 +39,8 @@ public class LoginInterceptor implements HandlerInterceptor{
                     }
                 }
                 if(!"".equals(loginCookieUserName) && !"".equals(loginCookiePassword)){
-                    String pwd = userService.getPwdByName(loginCookieUserName);
-                    if(loginCookiePassword.equals(pwd)){
+                    User user = userService.getUserByName(loginCookieUserName);
+                    if(loginCookiePassword.equals(user.getPassword())){
                         request.getSession().setAttribute("user", userService.getUserByName(loginCookieUserName));
                     }
                 }

@@ -33,11 +33,11 @@ public class UserService {
         return userDao.getUserByName(name).get(0);
     }
 
-    @Cacheable(value = "user",key = "#name")
+    /*@Cacheable(value = "user",key = "#name")
     public String getPwdByName(String name){
         System.out.println("打印语句则没有走缓存");
         return userDao.getPwdByName(name).get(0);
-    }
+    }*/
 
     //根据昵称模糊查询
     public List<User> getUserLike(String name){
