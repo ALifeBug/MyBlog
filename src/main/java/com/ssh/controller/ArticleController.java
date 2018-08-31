@@ -145,6 +145,32 @@ public class ArticleController implements HandlerExceptionResolver{
         return "blog_detail";
     }
 
+    //点赞
+    @RequestMapping(value = "/like",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> like(@RequestParam("blogId") String blogId,@RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.like(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
+    }
+
+    //收藏
+    @RequestMapping(value = "/star",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> star(@RequestParam("blogId") String blogId,@RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.star(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
+    }
+
 
 
     //处理文件上传超过最大体积的异常

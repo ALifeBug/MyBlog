@@ -39,7 +39,7 @@
                 <c:forEach items="${page.list}" var="blog">
                     <div class="articleList">
                         <div>
-                            <a href="${path}/index/details/${blog.id}" style="font-size: 20px;color: #dc3545">${blog.title}</a>
+                            <a href="${path}/index/details?blogId=${blog.id}" style="font-size: 20px;color: #dc3545">${blog.title}</a>
                         </div>
                         <div class="articleInfo">
                             <div style="float: left">

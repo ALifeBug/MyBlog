@@ -25,7 +25,7 @@
             </h5>
             <p style="font-size: 14px;width: 90%;border-bottom: 1px solid;height: 20px;margin-bottom: 10px">共${fn:length(favorite)}篇文章</p>
             <c:forEach items="${favorite}" var="favorite">
-                <a href="${path}/index/details/${favorite.key.blogId}" class="favorite">
+                <a href="${path}/index/details?blogId=${favorite.key.blogId}" class="favorite">
                 <div class="card bg-light" style="width: 90%;margin-top: 10px;margin-bottom: 10px;color: #f7f7f7">
                     <div class="card-body">
                         <div>

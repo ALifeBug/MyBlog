@@ -4,8 +4,8 @@ $(function () {
    $("#like_btn").click(function () {
        var blogId =$("#blogId").val();
        var usrId =$("#usrId").val();
-       var data = {'blogId':blogId,'usrId':usrId};
-       ajax(data,'/user/like',function () {
+       var data = {'blogId':blogId,'usrId':usrId,'pageNo':1};
+       ajax(data,'like',function () {
             if($("#isLike").val()==1)
                 $("#isLike").val(0);
             else
@@ -32,8 +32,8 @@ $(function () {
     $("#star_btn").click(function () {
         var blogId =$("#blogId").val();
         var usrId =$("#usrId").val();
-        var data = {'blogId':blogId,'usrId':usrId};
-        ajax(data,'/user/star',function () {
+        var data = {'blogId':blogId,'usrId':usrId,'pageNo':1};
+        ajax(data,'star',function () {
             if($("#isStar").val()==1)
                 $("#isStar").val(0);
             else

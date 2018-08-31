@@ -49,7 +49,7 @@
                     </c:if>
                 </div>
                 </center>
-                <div style="width: 900px;margin: 10px 0;font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;font-size: 17px;">
+                <div style="width: 700px;margin: 10px 0;font-family: 'Microsoft Yahei', Arial, Helvetica, sans-serif;font-size: 17px;">
                     <c:if test="${!empty article.image}">
                         <img src="${path}/index/getImage?imgName=${article.image}" class="image"/>
                     </c:if>

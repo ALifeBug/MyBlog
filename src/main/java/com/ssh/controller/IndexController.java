@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +20,9 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sccy on 2018/3/28/0028.
@@ -75,8 +74,8 @@ public class IndexController {
      * @param model
      * @return 该博客详细信息
      */
-    @RequestMapping("/details/{id}")
-    public String detail(@PathVariable("id") Integer blogId,Model model,HttpSession session){
+    @RequestMapping("/details")
+    public String detail(@RequestParam Integer blogId,Model model,HttpSession session){
         Article article = articleService.queryById(blogId);
         //浏览量加一
         articleService.BrowserCountIncrement(blogId);
@@ -92,6 +91,32 @@ public class IndexController {
         model.addAttribute("article",article).addAttribute("comments",comments).addAttribute("comment",new Comment()).addAttribute("isLike",isLike).addAttribute("isStar",isStar);
 
         return "blog_detail";
+    }
+
+    //点赞
+    @RequestMapping(value = "/like",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> like(@RequestParam("blogId") String blogId, @RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.like(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
+    }
+
+    //收藏
+    @RequestMapping(value = "/star",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,String> star(@RequestParam("blogId") String blogId,@RequestParam("usrId") String usrId){
+        Map<String,String> map = new HashMap<String, String>();
+        if(articleService.star(Integer.parseInt(blogId),Integer.parseInt(usrId))){
+            map.put("status","success");
+        }else{
+            map.put("status","failed");
+        }
+        return map;
     }
 
     @RequestMapping(value = {"/registerForm"})

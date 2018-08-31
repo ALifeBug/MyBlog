@@ -43,7 +43,7 @@
                         <img src="${path}/index/getImage?imgName=${sessionScope.user.portrait}" height="100%" width="100%" class="img-thumbnail">
                     </c:if>
                     <c:if test="${empty sessionScope.user.portrait}">
-                        <img src="${path}/img/img2.png" height="100%" width="100%" style="border-radius: 50%;">
+                        <img src="${path}/img/img2.png" height="80%" width="80%" class="img-thumbnail">
                     </c:if>
                 </div>
                 <div class="personalInfo">
@@ -59,13 +59,15 @@
             <div class="hot">
                 热门文章
             </div>
+            <c:if test="${fn:length(hotBlog) eq 5}">
             <div style="margin: 10px 0">
-                <a href="${path}/index/details/${hotBlog[4].id}" style="color: #dc3545;" class="hotblog">1.${hotBlog[4].title} ${hotBlog[4].editor}</a>
-                <a href="${path}/index/details/${hotBlog[3].id}" style="color: #fd7e14;" class="hotblog">2.${hotBlog[3].title} ${hotBlog[3].editor}</a>
-                <a href="${path}/index/details/${hotBlog[2].id}" style="color: #ffc107;" class="hotblog">3.${hotBlog[2].title} ${hotBlog[2].editor}</a>
-                <a href="${path}/index/details/${hotBlog[1].id}" style="color: #1e7e34;" class="hotblog">4.${hotBlog[1].title} ${hotBlog[1].editor}</a>
-                <a href="${path}/index/details/${hotBlog[0].id}" style="color: #28a745;" class="hotblog">5.${hotBlog[0].title} ${hotBlog[0].editor}</a>
+                <a href="${path}/index/details?blogId=${hotBlog[4].id}" style="color: #dc3545;" class="hotblog">1.${hotBlog[4].title} ${hotBlog[4].editor}</a>
+                <a href="${path}/index/details?blogId=${hotBlog[3].id}" style="color: #fd7e14;" class="hotblog">2.${hotBlog[3].title} ${hotBlog[3].editor}</a>
+                <a href="${path}/index/details?blogId=${hotBlog[2].id}" style="color: #ffc107;" class="hotblog">3.${hotBlog[2].title} ${hotBlog[2].editor}</a>
+                <a href="${path}/index/details?blogId=${hotBlog[1].id}" style="color: #1e7e34;" class="hotblog">4.${hotBlog[1].title} ${hotBlog[1].editor}</a>
+                <a href="${path}/index/details?blogId=${hotBlog[0].id}" style="color: #28a745;" class="hotblog">5.${hotBlog[0].title} ${hotBlog[0].editor}</a>
             </div>
+            </c:if>
             <%--<form method="post" action="${path}/index/search">
                 <div class="input-group mb-3 " style="width: 90%;height: 28px;margin: 50px 0;font-size: 9px;">
                     <input type="text" class="form-control" placeholder="输入用户名搜索用户" id="name" name="name" style="border-radius: 0!important;">
